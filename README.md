@@ -20,6 +20,7 @@ allprojects {
   
   
   dependencies {
-	        implementation 'com.github.AndroidRL:appspeed:Tag'
+	      	        implementation 'com.github.AndroidRL:appspeed:v1.0.1'
+
 	}
 	 
