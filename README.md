@@ -20,7 +20,6 @@ allprojects {
   
   
   dependencies {
-	      	        implementation 'com.github.AndroidRL:appspeed:v1.0.1'
-
+	      	       implementation 'com.github.AndroidRL:appspeed:1.0.2'
 	}
 	 
