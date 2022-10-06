@@ -1,10 +1,11 @@
-    package com.appwood.mylibrarys;
+package com.appwood.mylibrarys;
 
 import static ProMex.classs.Utils.Util.DEc;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -21,6 +22,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class SplashHelp {
 
+    public static String extra_switch_1;
     public static String extra_switch_2;
     public static String extra_switch_3;
     public static String extra_switch_4;
@@ -45,21 +47,24 @@ public class SplashHelp {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-//                      enable_google_admob_id = response.getString("enable_google_admob_id");
-
                     // google
                     MyHelpers.setGoogleEnable(response.getString("enable_google_admob_id"));
                     if (MyHelpers.getGoogleEnable().equals("1")) {
-                        MyHelpers.setGoogle_OpenADS(response.getString("google_open_id"));
                         MyHelpers.SetGoogleBanner(response.getString("google_admob_banner_id"));
                         String[] Google_native_split = response.getString("google_admob_native_id").split(",");
-                        MyHelpers.SetGoogleNative(Google_native_split[0]);
-                        MyHelpers.SetGoogleNative1(Google_native_split[1]);
-                        MyHelpers.SetGoogleNative2(Google_native_split[2]);
-                        String[] Google_inter_split = response.getString("google_admob_interstitial_id").split(",");
-                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
-                        MyHelpers.SetGoogleInter1(Google_inter_split[1]);
-                        MyHelpers.SetGoogleInter2(Google_inter_split[2]);
+                        if (Google_native_split.length == 1) {
+                            MyHelpers.SetGoogleNative(Google_native_split[0]);
+                            MyHelpers.SetGoogleNative1(Google_native_split[0]);
+                            MyHelpers.SetGoogleNative2(Google_native_split[0]);
+                        } else if (Google_native_split.length == 2) {
+                            MyHelpers.SetGoogleNative(Google_native_split[0]);
+                            MyHelpers.SetGoogleNative1(Google_native_split[1]);
+                            MyHelpers.SetGoogleNative2(Google_native_split[0]);
+                        } else if (Google_native_split.length == 3) {
+                            MyHelpers.SetGoogleNative(Google_native_split[0]);
+                            MyHelpers.SetGoogleNative1(Google_native_split[1]);
+                            MyHelpers.SetGoogleNative2(Google_native_split[2]);
+                        }
                         // color & name set
                         MyHelpers.setGooglebutton_name(response.getString("google_button_name"));
                         if (response.getString("google_button_color") != null && !response.getString("google_button_color").isEmpty()) {
@@ -68,19 +73,70 @@ public class SplashHelp {
                             MyHelpers.setGooglebutton_color("#000000");
                         }
                     }
+                    if (response.getString("google_open_id") != null && !response.getString("google_open_id").isEmpty()) {
+                        MyHelpers.setGoogle_OpenADS(response.getString("google_open_id"));
+                    }
+                    String[] Google_inter_split = response.getString("google_admob_interstitial_id").split(",");
+                    if (Google_inter_split.length == 1) {
+                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
+                        MyHelpers.SetGoogleInter1(Google_inter_split[0]);
+                        MyHelpers.SetGoogleInter2(Google_inter_split[0]);
+                    } else if (Google_inter_split.length == 2) {
+                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
+                        MyHelpers.SetGoogleInter1(Google_inter_split[1]);
+                        MyHelpers.SetGoogleInter2(Google_inter_split[0]);
+                    } else if (Google_inter_split.length == 3) {
+                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
+                        MyHelpers.SetGoogleInter1(Google_inter_split[1]);
+                        MyHelpers.SetGoogleInter2(Google_inter_split[2]);
+                    }
+
+
                     //facebook
                     MyHelpers.setFacebookEnable(response.getString("enable_facebook_id"));
                     if (MyHelpers.getFacebookEnable().equals("1")) {
-                        MyHelpers.setfacebook_open_ad_id(response.getString("facebook_open_id"));
                         String[] Facebook_banner_split = response.getString("facebook_banner_id").split(",");
-                        MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
-                        MyHelpers.setFacebookBanner1(Facebook_banner_split[1]);
-                        MyHelpers.setFacebookBanner2(Facebook_banner_split[2]);
+                        if (Facebook_banner_split.length == 1) {
+                            MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
+                            MyHelpers.setFacebookBanner1(Facebook_banner_split[0]);
+                            MyHelpers.setFacebookBanner2(Facebook_banner_split[0]);
+                        } else if (Facebook_banner_split.length == 2) {
+                            MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
+                            MyHelpers.setFacebookBanner1(Facebook_banner_split[1]);
+                            MyHelpers.setFacebookBanner2(Facebook_banner_split[0]);
+                        } else if (Facebook_banner_split.length == 3) {
+                            MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
+                            MyHelpers.setFacebookBanner1(Facebook_banner_split[1]);
+                            MyHelpers.setFacebookBanner2(Facebook_banner_split[2]);
+                        }
                         String[] Facebook_native_split = response.getString("facebook_native_id").split(",");
-                        MyHelpers.SetFacebookNative(Facebook_native_split[0]);
-                        MyHelpers.SetFacebookNative1(Facebook_native_split[1]);
-                        MyHelpers.SetFacebookNative2(Facebook_native_split[2]);
-                        String[] Facebook_inter_split = response.getString("facebook_interstitial_id").split(",");
+                        if (Facebook_native_split.length == 1) {
+                            MyHelpers.SetFacebookNative(Facebook_native_split[0]);
+                            MyHelpers.SetFacebookNative1(Facebook_native_split[0]);
+                            MyHelpers.SetFacebookNative2(Facebook_native_split[0]);
+                        } else if (Facebook_native_split.length == 2) {
+                            MyHelpers.SetFacebookNative(Facebook_native_split[0]);
+                            MyHelpers.SetFacebookNative1(Facebook_native_split[1]);
+                            MyHelpers.SetFacebookNative2(Facebook_native_split[0]);
+                        } else if (Facebook_native_split.length == 3) {
+                            MyHelpers.SetFacebookNative(Facebook_native_split[0]);
+                            MyHelpers.SetFacebookNative1(Facebook_native_split[1]);
+                            MyHelpers.SetFacebookNative2(Facebook_native_split[2]);
+                        }
+                    }
+                    if (response.getString("facebook_open_id") != null && !response.getString("facebook_open_id").isEmpty()) {
+                        MyHelpers.setfacebook_open_ad_id(response.getString("facebook_open_id"));
+                    }
+                    String[] Facebook_inter_split = response.getString("facebook_interstitial_id").split(",");
+                    if (Facebook_inter_split.length == 1) {
+                        MyHelpers.SetFacebookInter(Facebook_inter_split[0]);
+                        MyHelpers.SetFacebookInter1(Facebook_inter_split[0]);
+                        MyHelpers.SetFacebookInter2(Facebook_inter_split[0]);
+                    } else if (Facebook_inter_split.length == 2) {
+                        MyHelpers.SetFacebookInter(Facebook_inter_split[0]);
+                        MyHelpers.SetFacebookInter1(Facebook_inter_split[1]);
+                        MyHelpers.SetFacebookInter2(Facebook_inter_split[0]);
+                    } else if (Facebook_inter_split.length == 3) {
                         MyHelpers.SetFacebookInter(Facebook_inter_split[0]);
                         MyHelpers.SetFacebookInter1(Facebook_inter_split[1]);
                         MyHelpers.SetFacebookInter2(Facebook_inter_split[2]);
@@ -101,7 +157,6 @@ public class SplashHelp {
                     } else {
                         MyHelpers.setBackCounter(5000);
                     }
-
                     if (response.getString("regular_button_counter") != null && !response.getString("regular_button_counter").isEmpty()) {
                         MyHelpers.setCounter(Integer.parseInt(response.getString("regular_button_counter")));  //skip ads number
                     } else {
@@ -109,41 +164,7 @@ public class SplashHelp {
                     }
 
                     //MixAds
-                    MyHelpers.setmix_ad_on_off(response.getString("extra_switch_1")); //on inter Google on rakhva ni and aama 1
-                    if (MyHelpers.getmix_ad_on_off().equals("1")) {
-                        //google
-                        MyHelpers.setGoogle_OpenADS(response.getString("google_open_id"));
-                        MyHelpers.SetGoogleBanner(response.getString("google_admob_banner_id"));
-                        String[] Google_native_split = response.getString("google_admob_native_id").split(",");
-                        MyHelpers.SetGoogleNative(Google_native_split[0]);
-                        MyHelpers.SetGoogleNative1(Google_native_split[1]);
-                        MyHelpers.SetGoogleNative2(Google_native_split[2]);
-                        String[] Google_inter_split = response.getString("google_admob_interstitial_id").split(",");
-                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
-                        MyHelpers.SetGoogleInter1(Google_inter_split[1]);
-                        MyHelpers.SetGoogleInter2(Google_inter_split[2]);
-                        // color & name set
-                        MyHelpers.setGooglebutton_name(response.getString("google_button_name"));
-                        if (response.getString("google_button_color") != null && !response.getString("google_button_color").isEmpty()) {
-                            MyHelpers.setGooglebutton_color(response.getString("google_button_color"));
-                        } else {
-                            MyHelpers.setGooglebutton_color("#000000");
-                        }
-                        //facebook
-                        MyHelpers.setfacebook_open_ad_id(response.getString("facebook_open_id"));
-                        String[] Facebook_banner_split = response.getString("facebook_banner_id").split(",");
-                        MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
-                        MyHelpers.setFacebookBanner1(Facebook_banner_split[1]);
-                        MyHelpers.setFacebookBanner2(Facebook_banner_split[2]);
-                        String[] Facebook_native_split = response.getString("facebook_native_id").split(",");
-                        MyHelpers.SetFacebookNative(Facebook_native_split[0]);
-                        MyHelpers.SetFacebookNative1(Facebook_native_split[1]);
-                        MyHelpers.SetFacebookNative2(Facebook_native_split[2]);
-                        String[] Facebook_inter_split = response.getString("facebook_interstitial_id").split(",");
-                        MyHelpers.SetFacebookInter(Facebook_inter_split[0]);
-                        MyHelpers.SetFacebookInter1(Facebook_inter_split[1]);
-                        MyHelpers.SetFacebookInter2(Facebook_inter_split[2]);
-                    }
+                    MyHelpers.setmix_ad_on_off(response.getString("extra_switch_1"));
 
                     extra_switch_2 = response.getString("extra_switch_2");
                     extra_switch_3 = response.getString("extra_switch_3");
@@ -152,7 +173,6 @@ public class SplashHelp {
                     extra_text_2 = response.getString("extra_text_2");
                     extra_text_3 = response.getString("extra_text_3");
                     extra_text_4 = response.getString("extra_text_4");
-
 
                     //Open Other apps
                     MyHelpers.setOtherAppsShow(response.getString("replace_app"));
@@ -234,13 +254,9 @@ public class SplashHelp {
                     } else {
                         NextIntent(context, intent);
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override

@@ -86,11 +86,6 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("BackAdsOnOff", null);
     }
 
-
-
-
-
-
     public static void SetGoogleInter(String GoogleInter) {
         editor.putString("GoogleInter", GoogleInter).commit();
     }
@@ -114,6 +109,7 @@ public class MyHelpers extends Application {
     public static String getGoogleInter2() {
         return sharedPreferences.getString("GoogleInter2", null);
     }
+
     public static void SetGoogleBanner(String GoogleBanner) {
         editor.putString("GoogleBanner", GoogleBanner).commit();
     }
@@ -356,7 +352,6 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("mix_ad_on_off", null);
     }
 
-
     public static void setfacebook_open_ad_id(String facebook_open_ad_id) {
         editor.putString("facebook_open_ad_id", facebook_open_ad_id).commit();
     }
@@ -497,7 +492,6 @@ public class MyHelpers extends Application {
         }
         return installed;
     }
-
 
 
     public static int getRandomNumber(int min, int max) {
