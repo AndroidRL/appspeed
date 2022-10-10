@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 //        MainActivity.this.startActivity(new Intent(MainActivity.this, ExitScreen.class));
       AdsClass.Interstitial(this, new Intent(this, ExitScreen.class),0);
+//        AdsClass.BackInterstitial(this);
 
     }
 

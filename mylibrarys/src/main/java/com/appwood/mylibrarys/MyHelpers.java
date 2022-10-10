@@ -26,7 +26,6 @@ public class MyHelpers extends Application {
 
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
-    public static String enter_img_activity = "my";
     public static String PACKAGE_NAME;
     public static String android_id;
     public static MyHelpers app;
@@ -59,8 +58,6 @@ public class MyHelpers extends Application {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
-
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -117,6 +114,23 @@ public class MyHelpers extends Application {
     public static String getGoogleBanner() {
         return sharedPreferences.getString("GoogleBanner", null);
     }
+
+    public static void SetGoogleBanner1(String GoogleBanner1) {
+        editor.putString("GoogleBanner1", GoogleBanner1).commit();
+    }
+
+    public static String getGoogleBanner1() {
+        return sharedPreferences.getString("GoogleBanner1", null);
+    }
+
+    public static void SetGoogleBanner2(String GoogleBanner2) {
+        editor.putString("GoogleBanner2", GoogleBanner2).commit();
+    }
+
+    public static String getGoogleBanner2() {
+        return sharedPreferences.getString("GoogleBanner2", null);
+    }
+
 
     public static void SetGoogleNative(String GoogleNative) {
         editor.putString("GoogleNative", GoogleNative).commit();
@@ -351,6 +365,15 @@ public class MyHelpers extends Application {
     public static String getmix_ad_on_off() {
         return sharedPreferences.getString("mix_ad_on_off", null);
     }
+
+    public static void setmix_ad_counter(Integer mix_ad_counter) {
+        editor.putInt("mix_ad_counter", mix_ad_counter).commit();
+    }
+
+    public static Integer getmix_ad_counter() {
+        return sharedPreferences.getInt("mix_ad_counter", 5000);
+    }
+
 
     public static void setfacebook_open_ad_id(String facebook_open_ad_id) {
         editor.putString("facebook_open_ad_id", facebook_open_ad_id).commit();

@@ -92,68 +92,99 @@ public class AdsClass {
         return false;
     }
 
-
     /* Inter Code */
     public static void Interstitial(Activity context, Intent intent, int ActivityFinish) {
         if (checkConnection(context)) {
-
-                if (MyHelpers.getmix_ad_on_off().equals("1")) {
-                     if (mix_adsInter == 0) {
-                        mix_adsInter = 1;
-                        googleInterShow(context, () -> {
-                            context.startActivity(intent);
-                            if (ActivityFinish == 1) {
-                                context.finish();
-                            }
-                        });
-                    } else {
-                        mix_adsInter = 0;
-                        context.startActivity(intent);
-                        if (ActivityFinish == 1) {
-                            context.finish();
-                        }
-                        FacebookInterShowNext(context, new RandomAdListener() {
-                            @Override
-                            public void onClick() {
-                            }
-                        });
-                    }
-                    return;
-                }
-                if (MyHelpers.getCounter() != 5000) {
-                    auto_notShow_ads++;
-                    if (MyHelpers.getCounter() == auto_notShow_ads) {
-                        context.startActivity(intent);
-                        if (ActivityFinish == 1) {
-                            context.finish();
-                        }
-                        auto_notShow_ads = 0;
-                        return;
-                    }
-                }
-
-                if (MyHelpers.getGoogleEnable().equals("1")) {
-                    googleInterShow(context, () -> {
-                        context.startActivity(intent);
-                        if (ActivityFinish == 1) {
-                            context.finish();
-                        }
-                    });
-                } else if (MyHelpers.getFacebookEnable().equals("1")) {
+            //skip ads
+            if (MyHelpers.getCounter() != 5000) {
+                auto_notShow_ads++;
+                if (MyHelpers.getCounter()+1 == auto_notShow_ads) {
                     context.startActivity(intent);
                     if (ActivityFinish == 1) {
                         context.finish();
                     }
-
-                    FacebookInterShowNext(context, new RandomAdListener() {
-                        @Override
-                        public void onClick() {
-
-                        }
-                    });
-                } else {
-                    context.startActivity(intent);
+                    auto_notShow_ads = 0;
+                    return;
                 }
+            }
+            //mix ads
+            if (MyHelpers.getmix_ad_on_off().equals("1")) {
+
+                if (MyHelpers.getGoogleEnable().equals("1")) {
+                    if (MyHelpers.getmix_ad_counter() != 5000) {
+                        mix_adsInter++;
+                        if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter) {
+                            context.startActivity(intent);
+                            if (ActivityFinish == 1) {
+                                context.finish();
+                            }
+                            FacebookInterShowBack(context, new RandomBackAdListener() {
+                                @Override
+                                public void onClick() {
+                                }
+                            });
+                            mix_adsInter = 0;
+                        } else {
+                            googleInterShow(context, () -> {
+                                context.startActivity(intent);
+                                if (ActivityFinish == 1) {
+                                    context.finish();
+                                }
+                            });
+                        }
+                        return;
+                    }
+                } else if (MyHelpers.getFacebookEnable().equals("1")) {
+                    if (MyHelpers.getmix_ad_counter() != 5000) {
+                        mix_adsInter++;
+                        if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter) {
+                            googleInterShow(context, () -> {
+                                context.startActivity(intent);
+                                if (ActivityFinish == 1) {
+                                    context.finish();
+                                }
+                            });
+                            mix_adsInter = 0;
+                        } else {
+                            context.startActivity(intent);
+                            if (ActivityFinish == 1) {
+                                context.finish();
+                            }
+                            FacebookInterShowBack(context, new RandomBackAdListener() {
+                                @Override
+                                public void onClick() {
+                                }
+                            });
+                        }
+                        return;
+                    }
+                }
+
+            }
+
+
+            if (MyHelpers.getGoogleEnable().equals("1")) {
+                googleInterShow(context, () -> {
+                    context.startActivity(intent);
+                    if (ActivityFinish == 1) {
+                        context.finish();
+                    }
+                });
+            } else if (MyHelpers.getFacebookEnable().equals("1")) {
+                context.startActivity(intent);
+                if (ActivityFinish == 1) {
+                    context.finish();
+                }
+
+                FacebookInterShowNext(context, new RandomAdListener() {
+                    @Override
+                    public void onClick() {
+
+                    }
+                });
+            } else {
+                context.startActivity(intent);
+            }
         } else {
             context.startActivity(intent);
         }
@@ -175,33 +206,53 @@ public class AdsClass {
         if (checkConnection(context)) {
 
             if (MyHelpers.getBackAdsOnOff().equals("1")) {
-
-                if (MyHelpers.getmix_ad_on_off().equals("1")) {
-                    if (mix_adsInter_back == 0) {
-                        mix_adsInter_back = 1;
-                        googleInterShow(context, () -> {
-                            context.finish();
-                        });
-                    } else {
-                        mix_adsInter_back = 0;
-                        context.finish();
-                        FacebookInterShowBack(context, new RandomBackAdListener() {
-                            @Override
-                            public void onClick() {
-
-                            }
-                        });
-                    }
-                    return;
-                }
-
-
+                //skip back
                 if (MyHelpers.getBackCounter() != 5000) {
                     auto_notShow_adsBack++;
-                    if (MyHelpers.getBackCounter() == auto_notShow_adsBack) {
+                    if (MyHelpers.getBackCounter()+1 == auto_notShow_adsBack) {
                         context.finish();
                         auto_notShow_adsBack = 0;
                         return;
+                    }
+                }
+                //mix ads
+                if (MyHelpers.getmix_ad_on_off().equals("1")) {
+                    if (MyHelpers.getGoogleEnable().equals("1")) {
+                        if (MyHelpers.getmix_ad_counter() != 5000) {
+                            mix_adsInter_back++;
+                            if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter_back) {
+                                context.finish();
+                                FacebookInterShowBack(context, new RandomBackAdListener() {
+                                    @Override
+                                    public void onClick() {
+                                    }
+                                });
+                                mix_adsInter_back = 0;
+                            } else {
+                                googleInterShow(context, () -> {
+                                    context.finish();
+                                });
+                            }
+                            return;
+                        }
+                    } else if (MyHelpers.getFacebookEnable().equals("1")) {
+                        if (MyHelpers.getmix_ad_counter() != 5000) {
+                            mix_adsInter_back++;
+                            if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter_back) {
+                                googleInterShow(context, () -> {
+                                    context.finish();
+                                });
+                                mix_adsInter_back = 0;
+                            } else {
+                                context.finish();
+                                FacebookInterShowBack(context, new RandomBackAdListener() {
+                                    @Override
+                                    public void onClick() {
+                                    }
+                                });
+                            }
+                            return;
+                        }
                     }
                 }
 
@@ -211,7 +262,6 @@ public class AdsClass {
                     });
 
                 } else if (MyHelpers.getFacebookEnable().equals("1")) {
-
                     context.finish();
                     FacebookInterShowBack(context, new RandomBackAdListener() {
                         @Override
@@ -547,16 +597,16 @@ public class AdsClass {
     public static void NativeAds(final Activity activity, final ViewGroup viewGroup, final LinearLayout linearLayout, RelativeLayout addcontain, RelativeLayout ad_native_fb) {
 
 
-            if (checkConnection(activity)) {
+        if (checkConnection(activity)) {
 
-                if (MyHelpers.getGoogleEnable().equals("1")) {
+            if (MyHelpers.getGoogleEnable().equals("1")) {
 
-                    NativeAd_1(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
+                NativeAd_1(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
 
-                } else if (MyHelpers.getFacebookEnable().equals("1")) {
-                    FacebookNative(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
-                }
+            } else if (MyHelpers.getFacebookEnable().equals("1")) {
+                FacebookNative(activity, viewGroup, linearLayout, addcontain, ad_native_fb);
             }
+        }
     }
 
     /*Native Load Code Google*/
@@ -632,7 +682,6 @@ public class AdsClass {
                     com.google.android.gms.ads.nativead.NativeAdView nativeAdView = (com.google.android.gms.ads.nativead.NativeAdView) activity.getLayoutInflater().inflate(R.layout.ad_google_big_native, (ViewGroup) null);
                     GoogleNativeBig = nativeAd;
                     populateUnifiedNativeAdView(GoogleNativeBig, nativeAdView, activity, viewGroup, addcontain);
-
 
 
                 }
@@ -741,7 +790,6 @@ public class AdsClass {
 
                             @Override
                             public void onError(Ad ad, com.facebook.ads.AdError adError) {
-
 
 
                             }
@@ -864,18 +912,18 @@ public class AdsClass {
     public static void Banner(Context context, RelativeLayout banner_container, View main_banner_layout) {
 
 
-            if (checkConnection(context)) {
+        if (checkConnection(context)) {
 
-                if (MyHelpers.getGoogleEnable().equals("1")) {
+            if (MyHelpers.getGoogleEnable().equals("1")) {
 
-                    GoogleNativeBanner(context, banner_container, main_banner_layout);
+                GoogleNativeBanner(context, banner_container, main_banner_layout);
 
-                } else if (MyHelpers.getFacebookEnable().equals("1")) {
+            } else if (MyHelpers.getFacebookEnable().equals("1")) {
 
-                    FacebookBanner(context, banner_container, main_banner_layout);
+                FacebookBanner(context, banner_container, main_banner_layout);
 
-                }
             }
+        }
     }
 
     /*BannerNative Load Code Google */
@@ -900,7 +948,7 @@ public class AdsClass {
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError adError) {
 
-                        adLoader = new AdLoader.Builder(context, MyHelpers.getGoogleBanner())
+                        adLoader = new AdLoader.Builder(context, MyHelpers.getGoogleBanner1())
                                 .forNativeAd(nativeAds -> {
                                     GoogleNativeBig = nativeAds;
                                     main_banner_layout.setVisibility(View.VISIBLE);
@@ -916,7 +964,7 @@ public class AdsClass {
                                     @Override
                                     public void onAdFailedToLoad(@NonNull LoadAdError adError) {
 
-                                        adLoader = new AdLoader.Builder(context, MyHelpers.getGoogleBanner())
+                                        adLoader = new AdLoader.Builder(context, MyHelpers.getGoogleBanner2())
                                                 .forNativeAd(nativeAds -> {
                                                     GoogleNativeBig = nativeAds;
                                                     main_banner_layout.setVisibility(View.VISIBLE);
@@ -1235,8 +1283,6 @@ public class AdsClass {
         };
         fb_open_ad.loadAd(fb_open_ad.buildLoadAdConfig().withAdListener(adListener).build());
     }
-
-
 
 
 }

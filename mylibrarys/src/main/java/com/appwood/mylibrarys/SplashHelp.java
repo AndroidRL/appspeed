@@ -50,21 +50,15 @@ public class SplashHelp {
                     // google
                     MyHelpers.setGoogleEnable(response.getString("enable_google_admob_id"));
                     if (MyHelpers.getGoogleEnable().equals("1")) {
+                        //banner
                         MyHelpers.SetGoogleBanner(response.getString("google_admob_banner_id"));
-                        String[] Google_native_split = response.getString("google_admob_native_id").split(",");
-                        if (Google_native_split.length == 1) {
-                            MyHelpers.SetGoogleNative(Google_native_split[0]);
-                            MyHelpers.SetGoogleNative1(Google_native_split[0]);
-                            MyHelpers.SetGoogleNative2(Google_native_split[0]);
-                        } else if (Google_native_split.length == 2) {
-                            MyHelpers.SetGoogleNative(Google_native_split[0]);
-                            MyHelpers.SetGoogleNative1(Google_native_split[1]);
-                            MyHelpers.SetGoogleNative2(Google_native_split[0]);
-                        } else if (Google_native_split.length == 3) {
-                            MyHelpers.SetGoogleNative(Google_native_split[0]);
-                            MyHelpers.SetGoogleNative1(Google_native_split[1]);
-                            MyHelpers.SetGoogleNative2(Google_native_split[2]);
-                        }
+                        MyHelpers.SetGoogleBanner1(response.getString("google_admob_banner_id_1"));
+                        MyHelpers.SetGoogleBanner2(response.getString("google_admob_banner_id_2"));
+                        //native
+                        MyHelpers.SetGoogleNative(response.getString("google_admob_native_id"));
+                        MyHelpers.SetGoogleNative1(response.getString("google_admob_native_id_1"));
+                        MyHelpers.SetGoogleNative2(response.getString("google_admob_native_id_2"));
+
                         // color & name set
                         MyHelpers.setGooglebutton_name(response.getString("google_button_name"));
                         if (response.getString("google_button_color") != null && !response.getString("google_button_color").isEmpty()) {
@@ -75,71 +69,60 @@ public class SplashHelp {
                     }
                     if (response.getString("google_open_id") != null && !response.getString("google_open_id").isEmpty()) {
                         MyHelpers.setGoogle_OpenADS(response.getString("google_open_id"));
+                    } else {
+                        MyHelpers.setGoogle_OpenADS(null);
                     }
-                    String[] Google_inter_split = response.getString("google_admob_interstitial_id").split(",");
-                    if (Google_inter_split.length == 1) {
-                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
-                        MyHelpers.SetGoogleInter1(Google_inter_split[0]);
-                        MyHelpers.SetGoogleInter2(Google_inter_split[0]);
-                    } else if (Google_inter_split.length == 2) {
-                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
-                        MyHelpers.SetGoogleInter1(Google_inter_split[1]);
-                        MyHelpers.SetGoogleInter2(Google_inter_split[0]);
-                    } else if (Google_inter_split.length == 3) {
-                        MyHelpers.SetGoogleInter(Google_inter_split[0]);
-                        MyHelpers.SetGoogleInter1(Google_inter_split[1]);
-                        MyHelpers.SetGoogleInter2(Google_inter_split[2]);
+                    //google inter
+                    if (response.getString("google_admob_interstitial_id") != null && !response.getString("google_admob_interstitial_id").isEmpty()) {
+                        MyHelpers.SetGoogleInter(response.getString("google_admob_interstitial_id"));
+                    } else {
+                        MyHelpers.SetGoogleInter(null);
+                    }
+                    if (response.getString("google_admob_interstitial_id_1") != null && !response.getString("google_admob_interstitial_id_1").isEmpty()) {
+                        MyHelpers.SetGoogleInter1(response.getString("google_admob_interstitial_id_1"));
+                    } else {
+                        MyHelpers.SetGoogleInter1(null);
+                    }
+                    if (response.getString("google_admob_interstitial_id_2") != null && !response.getString("google_admob_interstitial_id_2").isEmpty()) {
+                        MyHelpers.SetGoogleInter2(response.getString("google_admob_interstitial_id_2"));
+                    } else {
+                        MyHelpers.SetGoogleInter2(null);
                     }
 
 
                     //facebook
                     MyHelpers.setFacebookEnable(response.getString("enable_facebook_id"));
                     if (MyHelpers.getFacebookEnable().equals("1")) {
-                        String[] Facebook_banner_split = response.getString("facebook_banner_id").split(",");
-                        if (Facebook_banner_split.length == 1) {
-                            MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
-                            MyHelpers.setFacebookBanner1(Facebook_banner_split[0]);
-                            MyHelpers.setFacebookBanner2(Facebook_banner_split[0]);
-                        } else if (Facebook_banner_split.length == 2) {
-                            MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
-                            MyHelpers.setFacebookBanner1(Facebook_banner_split[1]);
-                            MyHelpers.setFacebookBanner2(Facebook_banner_split[0]);
-                        } else if (Facebook_banner_split.length == 3) {
-                            MyHelpers.setFacebookBanner(Facebook_banner_split[0]);
-                            MyHelpers.setFacebookBanner1(Facebook_banner_split[1]);
-                            MyHelpers.setFacebookBanner2(Facebook_banner_split[2]);
-                        }
-                        String[] Facebook_native_split = response.getString("facebook_native_id").split(",");
-                        if (Facebook_native_split.length == 1) {
-                            MyHelpers.SetFacebookNative(Facebook_native_split[0]);
-                            MyHelpers.SetFacebookNative1(Facebook_native_split[0]);
-                            MyHelpers.SetFacebookNative2(Facebook_native_split[0]);
-                        } else if (Facebook_native_split.length == 2) {
-                            MyHelpers.SetFacebookNative(Facebook_native_split[0]);
-                            MyHelpers.SetFacebookNative1(Facebook_native_split[1]);
-                            MyHelpers.SetFacebookNative2(Facebook_native_split[0]);
-                        } else if (Facebook_native_split.length == 3) {
-                            MyHelpers.SetFacebookNative(Facebook_native_split[0]);
-                            MyHelpers.SetFacebookNative1(Facebook_native_split[1]);
-                            MyHelpers.SetFacebookNative2(Facebook_native_split[2]);
-                        }
+                        //banner
+                        MyHelpers.setFacebookBanner(response.getString("facebook_banner_id"));
+                        MyHelpers.setFacebookBanner1(response.getString("facebook_banner_id_1"));
+                        MyHelpers.setFacebookBanner2(response.getString("facebook_banner_id_2"));
+
+                        //native
+                        MyHelpers.SetFacebookNative(response.getString("facebook_native_id"));
+                        MyHelpers.SetFacebookNative1(response.getString("facebook_native_id_1"));
+                        MyHelpers.SetFacebookNative2(response.getString("facebook_native_id_2"));
                     }
                     if (response.getString("facebook_open_id") != null && !response.getString("facebook_open_id").isEmpty()) {
                         MyHelpers.setfacebook_open_ad_id(response.getString("facebook_open_id"));
+                    } else {
+                        MyHelpers.setfacebook_open_ad_id(null);
                     }
-                    String[] Facebook_inter_split = response.getString("facebook_interstitial_id").split(",");
-                    if (Facebook_inter_split.length == 1) {
-                        MyHelpers.SetFacebookInter(Facebook_inter_split[0]);
-                        MyHelpers.SetFacebookInter1(Facebook_inter_split[0]);
-                        MyHelpers.SetFacebookInter2(Facebook_inter_split[0]);
-                    } else if (Facebook_inter_split.length == 2) {
-                        MyHelpers.SetFacebookInter(Facebook_inter_split[0]);
-                        MyHelpers.SetFacebookInter1(Facebook_inter_split[1]);
-                        MyHelpers.SetFacebookInter2(Facebook_inter_split[0]);
-                    } else if (Facebook_inter_split.length == 3) {
-                        MyHelpers.SetFacebookInter(Facebook_inter_split[0]);
-                        MyHelpers.SetFacebookInter1(Facebook_inter_split[1]);
-                        MyHelpers.SetFacebookInter2(Facebook_inter_split[2]);
+                    //facebook inter
+                    if (response.getString("facebook_interstitial_id") != null && !response.getString("facebook_interstitial_id").isEmpty()) {
+                        MyHelpers.SetFacebookInter(response.getString("facebook_interstitial_id"));
+                    } else {
+                        MyHelpers.SetFacebookInter(null);
+                    }
+                    if (response.getString("facebook_interstitial_id_1") != null && !response.getString("facebook_interstitial_id_1").isEmpty()) {
+                        MyHelpers.SetFacebookInter1(response.getString("facebook_interstitial_id_1"));
+                    } else {
+                        MyHelpers.SetFacebookInter1(null);
+                    }
+                    if (response.getString("facebook_interstitial_id_2") != null && !response.getString("facebook_interstitial_id_2").isEmpty()) {
+                        MyHelpers.SetFacebookInter2(response.getString("facebook_interstitial_id_2"));
+                    } else {
+                        MyHelpers.SetFacebookInter2(null);
                     }
 
                     //Auto Link
@@ -164,8 +147,14 @@ public class SplashHelp {
                     }
 
                     //MixAds
-                    MyHelpers.setmix_ad_on_off(response.getString("extra_switch_1"));
+                    MyHelpers.setmix_ad_on_off(response.getString("mix_ad"));
+                    if (response.getString("mix_ad_counter") != null && !response.getString("mix_ad_counter").isEmpty()) {
+                        MyHelpers.setmix_ad_counter(Integer.parseInt(response.getString("mix_ad_counter")));
+                    } else {
+                        MyHelpers.setmix_ad_counter(5000);
+                    }
 
+                    extra_switch_1 = response.getString("extra_switch_1");
                     extra_switch_2 = response.getString("extra_switch_2");
                     extra_switch_3 = response.getString("extra_switch_3");
                     extra_switch_4 = response.getString("extra_switch_4");
