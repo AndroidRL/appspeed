@@ -36,8 +36,15 @@ public class MyHelpers extends Application {
     public static int VERSION_CODE;
     public static int Entery_UpdateApps;
 
+
+    public static String Kyyy;
+    public static String pack;
+
     public static AppOpenManager appOpenManager;
 
+
+    public static String FREE_SERVERS = "";
+    public static String PREMIUM_SERVERS = "";
 
     public static synchronized MyHelpers getInstance() {
         MyHelpers application;
@@ -69,9 +76,17 @@ public class MyHelpers extends Application {
 
         sharedPreferences = getSharedPreferences("babaji", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-
+        setCallBacks("No");
 
         super.onCreate();
+    }
+
+    public static void setCallBacks(String CallBacks) {
+        editor.putString("CallBacks", CallBacks).commit();
+    }
+
+    public static String getCallBacks() {
+        return sharedPreferences.getString("CallBacks", "No");
     }
 
 

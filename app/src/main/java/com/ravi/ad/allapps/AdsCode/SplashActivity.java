@@ -1,5 +1,6 @@
 package com.ravi.ad.allapps.AdsCode;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +15,8 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.appwood.mylibrarys.SplashHelp;
-import com.ravi.ad.allapps.R;
 import com.ravi.ad.allapps.MainActivity;
+import com.ravi.ad.allapps.R;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -28,12 +29,10 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void FirebaseGetId() {
-
         if (isOnline()) {
-            SplashHelp.splash_next("Testing","1", this, new Intent(this, MainActivity.class));
+            SplashHelp.splash_next("Testing", "1", this, new Intent(this, MainActivity.class));
             return;
         }
-
         Dialog dialog = new Dialog(SplashActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -58,7 +57,6 @@ public class SplashActivity extends AppCompatActivity {
         });
 
         dialog.show();
-
     }
 
     public boolean isOnline() {
@@ -66,5 +64,13 @@ public class SplashActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == 123) {
+            SplashHelp.start();
+        } else {
+            SplashHelp.prepare(SplashActivity.this);
+        }
+    }
 }

@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.facebook.ads.Ad;
 import com.facebook.ads.InterstitialAdListener;
@@ -94,30 +95,31 @@ public class AdsClass {
 
     /* Inter Code */
     public static void Interstitial(Activity context, Intent intent, int ActivityFinish) {
+
+        /**
+         * ActivityFinish == 0 next activity
+         * ActivityFinish == 1 next and finish activity
+         * ActivityFinish == 2 only finish activity(using backpress)
+         */
+
+
         if (checkConnection(context)) {
             //skip ads
             if (MyHelpers.getCounter() != 5000) {
                 auto_notShow_ads++;
-                if (MyHelpers.getCounter()+1 == auto_notShow_ads) {
-                    context.startActivity(intent);
-                    if (ActivityFinish == 1) {
-                        context.finish();
-                    }
+                if (MyHelpers.getCounter() + 1 == auto_notShow_ads) {
+                    Next_Slider_intents(context, intent, ActivityFinish);
                     auto_notShow_ads = 0;
                     return;
                 }
             }
             //mix ads
             if (MyHelpers.getmix_ad_on_off().equals("1")) {
-
                 if (MyHelpers.getGoogleEnable().equals("1")) {
                     if (MyHelpers.getmix_ad_counter() != 5000) {
                         mix_adsInter++;
                         if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter) {
-                            context.startActivity(intent);
-                            if (ActivityFinish == 1) {
-                                context.finish();
-                            }
+                            Next_Slider_intents(context, intent, ActivityFinish);
                             FacebookInterShowBack(context, new RandomBackAdListener() {
                                 @Override
                                 public void onClick() {
@@ -126,10 +128,7 @@ public class AdsClass {
                             mix_adsInter = 0;
                         } else {
                             googleInterShow(context, () -> {
-                                context.startActivity(intent);
-                                if (ActivityFinish == 1) {
-                                    context.finish();
-                                }
+                                Next_Slider_intents(context, intent, ActivityFinish);
                             });
                         }
                         return;
@@ -139,17 +138,12 @@ public class AdsClass {
                         mix_adsInter++;
                         if (MyHelpers.getmix_ad_counter() + 1 == mix_adsInter) {
                             googleInterShow(context, () -> {
-                                context.startActivity(intent);
-                                if (ActivityFinish == 1) {
-                                    context.finish();
-                                }
+                                Next_Slider_intents(context, intent, ActivityFinish);
+
                             });
                             mix_adsInter = 0;
                         } else {
-                            context.startActivity(intent);
-                            if (ActivityFinish == 1) {
-                                context.finish();
-                            }
+                            Next_Slider_intents(context, intent, ActivityFinish);
                             FacebookInterShowBack(context, new RandomBackAdListener() {
                                 @Override
                                 public void onClick() {
@@ -165,17 +159,10 @@ public class AdsClass {
 
             if (MyHelpers.getGoogleEnable().equals("1")) {
                 googleInterShow(context, () -> {
-                    context.startActivity(intent);
-                    if (ActivityFinish == 1) {
-                        context.finish();
-                    }
+                    Next_Slider_intents(context, intent, ActivityFinish);
                 });
             } else if (MyHelpers.getFacebookEnable().equals("1")) {
-                context.startActivity(intent);
-                if (ActivityFinish == 1) {
-                    context.finish();
-                }
-
+                Next_Slider_intents(context, intent, ActivityFinish);
                 FacebookInterShowNext(context, new RandomAdListener() {
                     @Override
                     public void onClick() {
@@ -183,10 +170,22 @@ public class AdsClass {
                     }
                 });
             } else {
-                context.startActivity(intent);
+                Next_Slider_intents(context, intent, ActivityFinish);
             }
         } else {
+            Next_Slider_intents(context, intent, ActivityFinish);
+        }
+    }
+
+
+    private static void Next_Slider_intents(Activity context, Intent intent, int ActivityFinish) {
+        if (ActivityFinish == 0) {
             context.startActivity(intent);
+        } else if (ActivityFinish == 1) {
+            context.startActivity(intent);
+            context.finish();
+        } else if (ActivityFinish == 2) {
+            context.finish();
         }
     }
 
@@ -209,7 +208,7 @@ public class AdsClass {
                 //skip back
                 if (MyHelpers.getBackCounter() != 5000) {
                     auto_notShow_adsBack++;
-                    if (MyHelpers.getBackCounter()+1 == auto_notShow_adsBack) {
+                    if (MyHelpers.getBackCounter() + 1 == auto_notShow_adsBack) {
                         context.finish();
                         auto_notShow_adsBack = 0;
                         return;
