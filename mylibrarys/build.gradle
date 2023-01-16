@@ -56,7 +56,9 @@ dependencies {
     /*Version 12 Supported library*/
     implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha02'
 
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
 
+    implementation 'com.github.oneconnectapi:OneConnectLib:v1.0.7'
 
 
 }
