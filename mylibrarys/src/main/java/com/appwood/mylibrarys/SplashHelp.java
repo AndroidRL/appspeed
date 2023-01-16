@@ -9,6 +9,7 @@ import android.net.VpnService;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -46,7 +47,6 @@ public class SplashHelp extends AppCompatActivity {
     public static String extra_text_3;
     public static String extra_text_4;
 
-
     public static Context contextx;
     public static Intent intentx;
     public static Runnable myRunnable;
@@ -59,8 +59,6 @@ public class SplashHelp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-
-
     }
 
     /*Splash*/
@@ -69,7 +67,12 @@ public class SplashHelp extends AppCompatActivity {
         myRunnable = new Runnable() {
             public void run() {
                 if (MyHelpers.getCallBacks().equals("Yes")) {
-                    ShowADS();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ShowADS();
+                        }
+                    },2000);
                 } else {
                     handler.postDelayed(myRunnable, 1000);
                 }
@@ -195,15 +198,14 @@ public class SplashHelp extends AppCompatActivity {
                     } else {
                         MyHelpers.setmix_ad_counter(5000);
                     }
-
                     extra_switch_1 = response.getString("extra_switch_1");
                     extra_switch_2 = response.getString("extra_switch_2");
                     extra_switch_3 = response.getString("extra_switch_3");
                     extra_switch_4 = response.getString("extra_switch_4");
                     extra_text_1 = response.getString("extra_text_1");
                     extra_text_2 = response.getString("extra_text_2"); // connection
-                    extra_text_3 = response.getString("extra_text_3"); //pack name
-                    extra_text_4 = response.getString("extra_text_4"); //Kay
+                    extra_text_3 = response.getString("extra_text_3");
+                    extra_text_4 = response.getString("extra_text_4"); //pack name,Kay
 
 
                     //Open Other apps
@@ -227,30 +229,33 @@ public class SplashHelp extends AppCompatActivity {
 
                     //servers
                     if (extra_switch_4.equals("1")) {
-                        MyHelpers.pack = extra_text_3;
-                        MyHelpers.Kyyy = extra_text_4;
-                        Thread thread = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    OneConnects oneConnect = new OneConnects();
-                                    oneConnect.initialize(context, DEc(MyHelpers.Kyyy));
-                                    try {
-                                        MyHelpers.FREE_SERVERS = oneConnect.fetch(true);
-                                        MyHelpers.PREMIUM_SERVERS = oneConnect.fetch(false);
-                                        selectedCountry = SelectedCountry();
-                                        prepare(context);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                        thread.start();
-
-
+                       if (CheckCountry()){
+                           ShowADS();
+                       }else {
+                           List<String> DATA = new ArrayList<String>(Arrays.asList(extra_text_4.split(",")));
+                           MyHelpers.pack = DATA.get(0);
+                           MyHelpers.Kyyy = DATA.get(1);
+                           Thread thread = new Thread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   try {
+                                       OneConnects oneConnect = new OneConnects();
+                                       oneConnect.initialize(context, DEc(MyHelpers.Kyyy));
+                                       try {
+                                           MyHelpers.FREE_SERVERS = oneConnect.fetch(true);
+                                           MyHelpers.PREMIUM_SERVERS = oneConnect.fetch(false);
+                                           selectedCountry = SelectedCountry();
+                                           prepare(context);
+                                       } catch (IOException e) {
+                                           e.printStackTrace();
+                                       }
+                                   } catch (Exception e) {
+                                       e.printStackTrace();
+                                   }
+                               }
+                           });
+                           thread.start();
+                       }
                     } else {
                         ShowADS();
                     }
@@ -436,5 +441,24 @@ public class SplashHelp extends AppCompatActivity {
         return random;
     }
 
+    public static String getCountryCode() {
+        TelephonyManager tm = (TelephonyManager) contextx.getSystemService(contextx.getApplicationContext().TELEPHONY_SERVICE);
+        return tm.getNetworkCountryIso();
+    }
+
+   public static Boolean CheckCountry() {
+       try {
+           List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_3.split(",")));
+           String tm = getCountryCode();
+           for (int i = 0; i < COUNTRY.size(); i++) {
+               if (COUNTRY.get(i).equals(tm)){
+                   return true;
+               }
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return false;
+   }
 
 }

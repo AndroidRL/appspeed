@@ -8,9 +8,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -73,4 +75,5 @@ public class SplashActivity extends AppCompatActivity {
             SplashHelp.prepare(SplashActivity.this);
         }
     }
+
 }
