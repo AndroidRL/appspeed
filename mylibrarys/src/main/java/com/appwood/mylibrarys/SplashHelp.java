@@ -5,12 +5,8 @@ import static ProMex.classs.Utils.Util.DEc;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.VpnService;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.RemoteException;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +18,9 @@ import com.google.android.gms.ads.appopen.AppOpenAd;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +28,6 @@ import java.util.Random;
 
 import ProMex.classs.Utils.Util;
 import cz.msebera.android.httpclient.Header;
-import top.oneconnectapi.app.OpenVpnApi;
 
 public class SplashHelp extends AppCompatActivity {
 
@@ -49,37 +42,17 @@ public class SplashHelp extends AppCompatActivity {
 
     public static Context contextx;
     public static Intent intentx;
-    public static Runnable myRunnable;
-
-    public static ArrayList<Countries> free_servers = new ArrayList<>();
-    public static Countries selectedCountry = null;
-
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+
+
     }
 
     /*Splash*/
     public static void splash_next(String packageName, String VersonCode, Context context, Intent intent) {
-        Handler handler = new Handler();
-        myRunnable = new Runnable() {
-            public void run() {
-                if (MyHelpers.getCallBacks().equals("Yes")) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            ShowADS();
-                        }
-                    },2000);
-                } else {
-                    handler.postDelayed(myRunnable, 1000);
-                }
-            }
-        };
-        handler.postDelayed(myRunnable, 1000);
-
         contextx = context;
         intentx = intent;
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
@@ -229,42 +202,37 @@ public class SplashHelp extends AppCompatActivity {
 
                     //servers
                     if (extra_switch_4.equals("1")) {
-                       if (CheckCountry()){
-                           ShowADS();
-                       }else {
-                           List<String> DATA = new ArrayList<String>(Arrays.asList(extra_text_4.split(",")));
-                           MyHelpers.pack = DATA.get(0);
-                           MyHelpers.Kyyy = DATA.get(1);
-                           Thread thread = new Thread(new Runnable() {
-                               @Override
-                               public void run() {
-                                   try {
-                                       OneConnects oneConnect = new OneConnects();
-                                       oneConnect.initialize(context, DEc(MyHelpers.Kyyy));
-                                       try {
-                                           MyHelpers.FREE_SERVERS = oneConnect.fetch(true);
-                                           MyHelpers.PREMIUM_SERVERS = oneConnect.fetch(false);
-                                           selectedCountry = SelectedCountry();
-                                           prepare(context);
-                                       } catch (IOException e) {
-                                           e.printStackTrace();
-                                       }
-                                   } catch (Exception e) {
-                                       e.printStackTrace();
-                                   }
-                               }
-                           });
-                           thread.start();
-                       }
+                        if (CheckCountry()) {
+                            BaseActivity.vpn = false;
+                            ShowADS();
+                        } else {
+                            List<String> DATA = new ArrayList<String>(Arrays.asList(extra_text_4.split(",")));
+                            BaseActivity.id = DATA.get(0);
+                            BaseActivity.url = DATA.get(1);
+                            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_2.split(",")));
+                            BaseActivity.Country = COUNTRY.get(getRandom(0, COUNTRY.size() - 1));
+                            BaseActivity.vpn = true;
+                            BaseActivity.vpn_cancel_count = 2;
+                            BaseActivity.vpn_connection((Activity) contextx, new BaseActivity.vpn_callback() {
+                                @Override
+                                public void vpn_final_callback(String s) {
+                                    if (s.equals("success")) {
+                                        ShowADS();
+                                    } else {
+                                        ShowADS();
+                                    }
+                                }
+                            });
+                        }
                     } else {
+                        BaseActivity.vpn = false;
                         ShowADS();
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
@@ -273,77 +241,6 @@ public class SplashHelp extends AppCompatActivity {
             }
         });
 
-    }
-
-    private static Countries SelectedCountry() {
-        free_servers.clear();
-        if (extra_text_2.equals("all")) {
-            try {
-                JSONArray jsonArray_free = new JSONArray(MyHelpers.FREE_SERVERS);
-                for (int i = 0; i < jsonArray_free.length(); i++) {
-                    JSONObject object = (JSONObject) jsonArray_free.get(i);
-                    free_servers.add(new Countries(object.getString("serverName"), object.getString("flag_url"), object.getString("ovpnConfiguration"), object.getString("vpnUserName"), object.getString("vpnPassword")));
-                }
-                JSONArray jsonArray_vpi = new JSONArray(MyHelpers.PREMIUM_SERVERS);
-                for (int i = 0; i < jsonArray_vpi.length(); i++) {
-                    JSONObject object = (JSONObject) jsonArray_vpi.get(i);
-                    free_servers.add(new Countries(object.getString("serverName"), object.getString("flag_url"), object.getString("ovpnConfiguration"), object.getString("vpnUserName"), object.getString("vpnPassword")));
-                }
-                return free_servers.get(getRandom(0, free_servers.size() - 1));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        } else if (extra_text_2.equals("v")) {
-            try {
-                JSONArray jsonArray_vpi = new JSONArray(MyHelpers.PREMIUM_SERVERS);
-                for (int i = 0; i < jsonArray_vpi.length(); i++) {
-                    JSONObject object = (JSONObject) jsonArray_vpi.get(i);
-                    free_servers.add(new Countries(object.getString("serverName"), object.getString("flag_url"), object.getString("ovpnConfiguration"), object.getString("vpnUserName"), object.getString("vpnPassword")));
-                }
-                return free_servers.get(getRandom(0, free_servers.size() - 1));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else if (extra_text_2.equals("f")) {
-            try {
-                JSONArray jsonArray_free = new JSONArray(MyHelpers.FREE_SERVERS);
-                for (int i = 0; i < jsonArray_free.length(); i++) {
-                    JSONObject object = (JSONObject) jsonArray_free.get(i);
-                    free_servers.add(new Countries(object.getString("serverName"), object.getString("flag_url"), object.getString("ovpnConfiguration"), object.getString("vpnUserName"), object.getString("vpnPassword")));
-                }
-                return free_servers.get(getRandom(0, free_servers.size() - 1));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        } else {
-            try {
-                List<String> myList = new ArrayList<String>(Arrays.asList(extra_text_2.split(",")));
-                if (myList.get(0).equals("v")) {
-                    JSONArray jsonArray_vpi = new JSONArray(MyHelpers.PREMIUM_SERVERS);
-                    for (int i = 0; i < jsonArray_vpi.length(); i++) {
-                        JSONObject object = (JSONObject) jsonArray_vpi.get(i);
-                        free_servers.add(new Countries(object.getString("serverName"), object.getString("flag_url"), object.getString("ovpnConfiguration"), object.getString("vpnUserName"), object.getString("vpnPassword")));
-                    }
-                    return free_servers.get(Integer.parseInt(myList.get(getRandom(1, myList.size() - 1))));
-                } else if (myList.get(0).equals("f")) {
-                    JSONArray jsonArray_free = new JSONArray(MyHelpers.FREE_SERVERS);
-                    for (int i = 0; i < jsonArray_free.length(); i++) {
-                        JSONObject object = (JSONObject) jsonArray_free.get(i);
-                        free_servers.add(new Countries(object.getString("serverName"), object.getString("flag_url"), object.getString("ovpnConfiguration"), object.getString("vpnUserName"), object.getString("vpnPassword")));
-                    }
-                    return free_servers.get(Integer.parseInt(myList.get(getRandom(1, myList.size() - 1))));
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-
-        return null;
     }
 
     private static void ShowADS() {
@@ -415,27 +312,6 @@ public class SplashHelp extends AppCompatActivity {
         ((Activity) context).finish();
     }
 
-
-    public static void prepare(Context context) {
-        Intent intent = VpnService.prepare(context);
-        if (intent != null) {
-            ((Activity) context).startActivityForResult(intent, 123);
-        } else {
-            start();
-        }
-    }
-
-    public static void start() {
-        try {
-            ActiveServer.saveServer(selectedCountry, contextx);
-            OpenVpnApi.startVpn(contextx, selectedCountry.getOvpn(), selectedCountry.getCountry(), selectedCountry.getOvpnUserName(), selectedCountry.getOvpnUserPassword());
-            MyHelpers.setCallBacks("Yes");
-        } catch (RemoteException e) {
-            e.printStackTrace();
-
-        }
-    }
-
     public static int getRandom(int min, int max) {
         int random = new Random().nextInt((max - min) + 1) + min;
         return random;
@@ -446,19 +322,19 @@ public class SplashHelp extends AppCompatActivity {
         return tm.getNetworkCountryIso();
     }
 
-   public static Boolean CheckCountry() {
-       try {
-           List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_3.split(",")));
-           String tm = getCountryCode();
-           for (int i = 0; i < COUNTRY.size(); i++) {
-               if (COUNTRY.get(i).equals(tm)){
-                   return true;
-               }
-           }
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-       return false;
-   }
+    public static Boolean CheckCountry() {
+        try {
+            List<String> COUNTRY = new ArrayList<String>(Arrays.asList(extra_text_3.split(",")));
+            String tm = getCountryCode();
+            for (int i = 0; i < COUNTRY.size(); i++) {
+                if (COUNTRY.get(i).equals(tm)) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

@@ -66,14 +66,5 @@ public class SplashActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == 123) {
-            SplashHelp.start();
-        } else {
-            SplashHelp.prepare(SplashActivity.this);
-        }
-    }
 
 }

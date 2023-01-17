@@ -37,9 +37,6 @@ public class MyHelpers extends Application {
     public static int Entery_UpdateApps;
 
 
-    public static String Kyyy;
-    public static String pack;
-
     public static AppOpenManager appOpenManager;
 
 
@@ -76,19 +73,8 @@ public class MyHelpers extends Application {
 
         sharedPreferences = getSharedPreferences("babaji", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        setCallBacks("No");
-
         super.onCreate();
     }
-
-    public static void setCallBacks(String CallBacks) {
-        editor.putString("CallBacks", CallBacks).commit();
-    }
-
-    public static String getCallBacks() {
-        return sharedPreferences.getString("CallBacks", "No");
-    }
-
 
     public static void setBackAdsOnOff(String BackAdsOnOff) {
         editor.putString("BackAdsOnOff", BackAdsOnOff).commit();
