@@ -21,6 +21,12 @@
         android:theme="@style/Theme.AdsProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4347201915048498~6120388314" />
+<!--        <meta-data-->
+<!--        android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--        android:value="ca-app-pub-4347201915048498~6120388314"/>-->
 
         <activity
             android:name="com.ravi.ad.allapps.TestingActivity"

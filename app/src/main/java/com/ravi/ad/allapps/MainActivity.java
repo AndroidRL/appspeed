@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
     }
 
     public void ADS(View view) {
@@ -30,16 +28,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //
-//        //native
-//        //R and B
         AdsClass.NativeAds(this, findViewById(R.id.native_detail),
                 findViewById(R.id.banner_native), findViewById(R.id.addcontain)
                 , findViewById(R.id.ad_native_fb));
 
-
         //banner
-        AdsClass.Banner(this, findViewById(R.id.bottomsads).findViewById(R.id.banner_container), findViewById(R.id.bottomsads));
+        AdsClass.Banner(this, findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.google_banner_container), findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.fb_banner_container), findViewById(R.id.bottomsads));
     }
 
 //    @Override

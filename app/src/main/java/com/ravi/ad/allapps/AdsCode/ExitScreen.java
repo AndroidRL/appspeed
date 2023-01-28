@@ -50,8 +50,7 @@ public class ExitScreen extends Activity {
     }
 
     private void yes() {
-        finish();
-        finishAffinity();
+         finishAffinity();
     }
 
     private void no() {

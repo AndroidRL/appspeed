@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 21
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
 
     /*Google Library*/
-    implementation 'com.google.android.gms:play-services-ads:19.8.0'
+     implementation 'com.google.android.gms:play-services-ads:21.5.0'
 
     /*Fb library*/
     implementation 'com.facebook.android:audience-network-sdk:6.11.0'
@@ -50,8 +50,8 @@ dependencies {
     /*Lifecycle Library*/
     def lifecycle_version = "2.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-runtime:2.4.0"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime:2.5.1"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.5.1"
 
     /*Version 12 Supported library*/
     implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha02'

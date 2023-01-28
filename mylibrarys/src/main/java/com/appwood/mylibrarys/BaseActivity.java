@@ -3,21 +3,15 @@ package com.appwood.mylibrarys;
 import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import unified.vpn.sdk.AuthMethod;
 import unified.vpn.sdk.Callback;
@@ -168,7 +162,7 @@ public class BaseActivity extends AppCompatActivity {
 
                         @Override
                         public void error(VpnException vpnException) {
-                             if (vpnException.getMessage() == null) {
+                            if (vpnException.getMessage() == null) {
                                 vpn_callback.vpn_final_callback("connect - connection fail " + vpnException.getMessage());
                             } else if (vpnException instanceof VpnPermissionDeniedException) {
                                 if (cancel_count == vpn_cancel_count) {

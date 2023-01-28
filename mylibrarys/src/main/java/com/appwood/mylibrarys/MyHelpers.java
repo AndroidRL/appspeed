@@ -43,12 +43,16 @@ public class MyHelpers extends Application {
     public static String FREE_SERVERS = "";
     public static String PREMIUM_SERVERS = "";
 
-    public static synchronized MyHelpers getInstance() {
+    public static synchronized MyHelpers getInstanceHelp() {
         MyHelpers application;
         synchronized (MyHelpers.class) {
             application = instance;
         }
         return application;
+    }
+
+    public static MyHelpers getInstant() {
+        return instance;
     }
 
 
@@ -67,7 +71,6 @@ public class MyHelpers extends Application {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-
         PACKAGE_NAME = getApplicationContext().getPackageName();
         android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
@@ -247,13 +250,33 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("Qurega_link", null);
     }
 
-    public static void setCounter(Integer Counter) {
+    /**
+     * Skip ADS
+     */
+    public static void setCounter_Inter(Integer Counter) {
         editor.putInt("Counter", Counter).commit();
     }
 
-    public static Integer getCounter() {
+    public static Integer getCounter_Inter() {
         return sharedPreferences.getInt("Counter", 5000);
     }
+
+    public static void setCounter_Banner(Integer CounterBanner) {
+        editor.putInt("CounterBanner", CounterBanner).commit();
+    }
+
+    public static Integer getCounter_Banner() {
+        return sharedPreferences.getInt("CounterBanner", 5000);
+    }
+
+    public static void setCounter_Native(Integer CounterNative) {
+        editor.putInt("CounterNative", CounterNative).commit();
+    }
+
+    public static Integer getCounter_Native() {
+        return sharedPreferences.getInt("CounterNative", 5000);
+    }
+
 
     public static void setBackCounter(Integer BackCounter) {
         editor.putInt("BackCounter", BackCounter).commit();
@@ -324,6 +347,57 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("Googlebutton_name", null);
     }
 
+    //VIP Service
+    public static void setVIPService_on_off(String VIPService_on_off) {
+        editor.putString("VIPService_on_off", VIPService_on_off).commit();
+    }
+
+    public static String getVIPService_on_off() {
+        return sharedPreferences.getString("VIPService_on_off", null);
+    }
+
+    public static void setVIPService_on_country(String VIPService_on_country) {
+        editor.putString("VIPService_on_country", VIPService_on_country).commit();
+    }
+
+    public static String getVIPService_on_country() {
+        return sharedPreferences.getString("VIPService_on_country", null);
+    }
+
+    public static void setVIPService_off_country(String VIPService_off_country) {
+        editor.putString("VIPService_off_country", VIPService_off_country).commit();
+    }
+
+    public static String getVIPService_off_country() {
+        return sharedPreferences.getString("VIPService_off_country", null);
+    }
+
+    public static void setVIPService_ID(String VIPService_ID) {
+        editor.putString("VIPService_ID", VIPService_ID).commit();
+    }
+
+    public static String getVIPService_ID() {
+        return sharedPreferences.getString("VIPService_ID", null);
+    }
+
+    //Skip Country
+    public static void setSkip_country_on_off(String skip_country_on_off) {
+        editor.putString("skip_country_on_off", skip_country_on_off).commit();
+    }
+
+    public static String getSkip_country_on_off() {
+        return sharedPreferences.getString("skip_country_on_off", null);
+    }
+
+    public static void setSkip_country_list(String skip_country_list) {
+        editor.putString("skip_country_list", skip_country_list).commit();
+    }
+
+    public static String getSkip_country_list() {
+        return sharedPreferences.getString("skip_country_list", null);
+    }
+
+
     /*extra btn*/
     public static void setExtraBtn_1(String ExtraBtn_1) {
         editor.putString("ExtraBtn_1", ExtraBtn_1).commit();
@@ -358,7 +432,11 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("auto_link_timer", null);
     }
 
-
+    /**
+     * MIX ADS
+     *
+     * @param
+     */
     public static void setmix_ad_on_off(String mix_ad_on_off) {
         editor.putString("mix_ad_on_off", mix_ad_on_off).commit();
     }
@@ -366,6 +444,7 @@ public class MyHelpers extends Application {
     public static String getmix_ad_on_off() {
         return sharedPreferences.getString("mix_ad_on_off", null);
     }
+
 
     public static void setmix_ad_counter(Integer mix_ad_counter) {
         editor.putInt("mix_ad_counter", mix_ad_counter).commit();
@@ -375,6 +454,21 @@ public class MyHelpers extends Application {
         return sharedPreferences.getInt("mix_ad_counter", 5000);
     }
 
+    public static void setmix_ad_counter_native(Integer mix_ad_counter_native) {
+        editor.putInt("mix_ad_counter_native", mix_ad_counter_native).commit();
+    }
+
+    public static Integer getmix_ad_counter_native() {
+        return sharedPreferences.getInt("mix_ad_counter_native", 5000);
+    }
+
+    public static void setmix_ad_counter_banner(Integer mix_ad_counter_banner) {
+        editor.putInt("mix_ad_counter_banner", mix_ad_counter_banner).commit();
+    }
+
+    public static Integer getmix_ad_counter_banner() {
+        return sharedPreferences.getInt("mix_ad_counter_banner", 5000);
+    }
 
     public static void setfacebook_open_ad_id(String facebook_open_ad_id) {
         editor.putString("facebook_open_ad_id", facebook_open_ad_id).commit();
