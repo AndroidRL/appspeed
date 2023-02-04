@@ -55,8 +55,4 @@ dependencies {
 
     /*Version 12 Supported library*/
     implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha02'
-
-    implementation 'com.github.AnchorFreePartner.hydra-sdk-android:sdk-core:4.1.0'
-    implementation 'com.github.AnchorFreePartner.hydra-sdk-android:hydra:4.1.0'
-    implementation 'com.github.AnchorFreePartner.hydra-sdk-android:openvpn:4.1.0'
 }
