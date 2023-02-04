@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void FirebaseGetId() {
         if (isOnline()) {
-            SplashHelp.splash_next("Testing..New,Setup", "1", this, new Intent(this, MainActivity.class));
+            SplashHelp.splash_next("Test", "1", this, new Intent(this, MainActivity.class));
             return;
         }
         Dialog dialog = new Dialog(SplashActivity.this);

@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
 
     /*Google Library*/
-     implementation 'com.google.android.gms:play-services-ads:21.5.0'
+     implementation 'com.google.android.gms:play-services-ads:21.3.0'
 
     /*Fb library*/
     implementation 'com.facebook.android:audience-network-sdk:6.11.0'
