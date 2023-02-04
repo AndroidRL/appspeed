@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 

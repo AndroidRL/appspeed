@@ -37,12 +37,6 @@ public class MyHelpers extends Application {
     public static int Entery_UpdateApps;
 
 
-    public static AppOpenManager appOpenManager;
-
-
-    public static String FREE_SERVERS = "";
-    public static String PREMIUM_SERVERS = "";
-
     public static synchronized MyHelpers getInstanceHelp() {
         MyHelpers application;
         synchronized (MyHelpers.class) {
@@ -653,5 +647,3 @@ public class MyHelpers extends Application {
         }
     }
 }
-
-
