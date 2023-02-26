@@ -6,7 +6,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.ravi.ad.allapps"
+        applicationId "com.ravi.ad.allapp"
         minSdk 21
         targetSdk 33
         versionCode 1

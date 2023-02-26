@@ -27,11 +27,9 @@
         <activity
             android:name="com.ravi.ad.allapps.MainActivity"
             android:exported="false" />
-
         <activity
             android:name="com.ravi.ad.allapps.AdsCode.ExitScreen"
             android:exported="false" />
-
         <activity
             android:name="com.ravi.ad.allapps.AdsCode.SplashActivity"
             android:exported="true">
