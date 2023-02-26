@@ -1,13 +1,14 @@
 package com.ravi.ad.allapps;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.appwood.mylibrarys.AdsClass;
-import com.ravi.ad.allapps.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.appwood.mylibrarys.BannerClass;
+import com.appwood.mylibrarys.InterClass;
+import com.appwood.mylibrarys.NativeClass;
 
 public class TestingActivity extends AppCompatActivity {
 
@@ -19,29 +20,21 @@ public class TestingActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AdsClass.BackInterstitial(TestingActivity.this);
+        InterClass.BackInterstitial(TestingActivity.this);
     }
 
     public void ADSs(View view) {
-
-        AdsClass.Interstitial(this, new Intent(this, MainActivity.class), 0);
-
+        InterClass.Interstitial(this, new Intent(this, MainActivity.class), 0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //
-//        //native
-//        //R and B
-        AdsClass.NativeAds(this, findViewById(R.id.native_detail),
+        NativeClass.NativeAds(this, findViewById(R.id.native_detail),
                 findViewById(R.id.banner_native), findViewById(R.id.addcontain)
-                , findViewById(R.id.ad_native_fb));
-
-        //banner
-        AdsClass.Banner(this, findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.google_banner_container), findViewById(R.id.bottomsads).findViewById(com.appwood.mylibrarys.R.id.fb_banner_container), findViewById(R.id.bottomsads));
+                , findViewById(R.id.ad_native_fb), findViewById(R.id.native_ad_layout), findViewById(R.id.custom_native), findViewById(R.id.applovin_native));
+        BannerClass.Banner(this, findViewById(R.id.bottomsads), findViewById(R.id.google_banner), findViewById(R.id.fb_banner), findViewById(R.id.applovin_banner));
     }
-
 
 
 //    @Override

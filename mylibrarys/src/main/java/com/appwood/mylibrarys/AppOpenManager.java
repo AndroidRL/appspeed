@@ -5,7 +5,6 @@ import static androidx.lifecycle.Lifecycle.Event.ON_START;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,14 +27,15 @@ public class AppOpenManager implements Application.ActivityLifecycleCallbacks, L
     private final Application myApplication;
     OnAppOpenClose onAppOpenClose;
     int myids1;
-    public  static String app_id;
+    public static String app_id;
 
     public interface OnAppOpenClose {
         void OnAppOpenFailToLoad();
+
         void OnAppOpenClose();
     }
 
-    public AppOpenManager(String open_ad_id,Application myApplication, OnAppOpenClose onAppOpenClose) {
+    public AppOpenManager(String open_ad_id, Application myApplication, OnAppOpenClose onAppOpenClose) {
         this.app_id = open_ad_id;
         this.myApplication = myApplication;
         this.onAppOpenClose = onAppOpenClose;

@@ -7,12 +7,23 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+    <uses-permission android:name="android.permission.Ad_ID" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
-    <application android:name=".MyHelpers" >
+
+    <application android:name=".MyHelpers">
         <activity android:name=".UpdateAppActivity" />
         <activity android:name=".SplashHelp" />
+        <activity android:name=".CustomAdsInterActivity" />
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
+        <meta-data
+            android:name="applovin.sdk.key"
+            android:value="k5Sz10KaUibR939alqA1zPlTrXqQRlCyC6L_yIcr9Hhbl1y004whkL4rJ4ZSbdwH1Lu748pawbdo5N_p2fXJFf" />
+        <meta-data
+            android:name="applovin.sdk.verbose_logging"
+            android:value="true" />
     </application>
 </manifest>

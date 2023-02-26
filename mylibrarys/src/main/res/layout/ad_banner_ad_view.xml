@@ -5,22 +5,31 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/fb_banner_container"
+            android:id="@+id/google_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone" />
 
         <RelativeLayout
-            android:id="@+id/google_banner_container"
+            android:id="@+id/fb_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/applovin_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
 
     </RelativeLayout>
 

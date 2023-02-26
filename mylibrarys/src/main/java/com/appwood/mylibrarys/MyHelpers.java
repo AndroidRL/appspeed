@@ -5,15 +5,15 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Handler;
-import android.provider.Settings;
 
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.applovin.sdk.AppLovinSdk;
+import com.applovin.sdk.AppLovinSdkConfiguration;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -26,22 +26,13 @@ public class MyHelpers extends Application {
 
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
-    public static String PACKAGE_NAME;
-    public static String android_id;
     public static MyHelpers app;
-
     public static MyHelpers instance;
-
-
-    public static int VERSION_CODE;
     public static int Entery_UpdateApps;
+    public static int Google_inter_number;
+    public static int Google_native_number;
 
-
-    public static AppOpenManager appOpenManager;
-
-
-    public static String FREE_SERVERS = "";
-    public static String PREMIUM_SERVERS = "";
+    public static Intent CustomIntent;
 
     public static synchronized MyHelpers getInstanceHelp() {
         MyHelpers application;
@@ -55,24 +46,27 @@ public class MyHelpers extends Application {
         return instance;
     }
 
-
     @Override
     public void onCreate() {
         instance = this;
-        AudienceNetworkAds.initialize(this);
-        try {
-            PackageInfo packageInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            VERSION_CODE = packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        /*Google*/
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        PACKAGE_NAME = getApplicationContext().getPackageName();
-        android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        /*Facebook*/
+        AudienceNetworkAds.initialize(this);
+        /*App Lovin*/
+        AppLovinSdk.getInstance(this).setMediationProvider("max");
+        AppLovinSdk.initializeSdk(this, new AppLovinSdk.SdkInitializationListener() {
+            @Override
+            public void onSdkInitialized(final AppLovinSdkConfiguration configuration) {
+            }
+        });
+
+        /*Custom*/
+        SplashHelp.APICalls();
 
         sharedPreferences = getSharedPreferences("babaji", MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -85,6 +79,50 @@ public class MyHelpers extends Application {
 
     public static String getBackAdsOnOff() {
         return sharedPreferences.getString("BackAdsOnOff", null);
+    }
+
+    /**
+     * Google ads
+     */
+    public static void setGoogleEnable(String GoogleEnable) {
+        editor.putString("GoogleEnable", GoogleEnable).commit();
+    }
+
+    public static String getGoogleEnable() {
+        return sharedPreferences.getString("GoogleEnable", null);
+    }
+
+
+    public static void setGoogle_OpenADS(String Google_OpenADS) {
+        editor.putString("Google_OpenADS", Google_OpenADS).commit();
+    }
+
+    public static String getGoogle_OpenADS() {
+        return sharedPreferences.getString("Google_OpenADS", null);
+    }
+
+    public static void setad_ICON(String ad_ICON) {
+        editor.putString("ad_ICON", ad_ICON).commit();
+    }
+
+    public static String getad_ICON() {
+        return sharedPreferences.getString("ad_ICON", null);
+    }
+
+    public static void setGooglebutton_color(String Googlebutton_color) {
+        editor.putString("Googlebutton_color", Googlebutton_color).commit();
+    }
+
+    public static String getGooglebutton_color() {
+        return sharedPreferences.getString("Googlebutton_color", null);
+    }
+
+    public static void setGooglebutton_name(String Googlebutton_name) {
+        editor.putString("Googlebutton_name", Googlebutton_name).commit();
+    }
+
+    public static String getGooglebutton_name() {
+        return sharedPreferences.getString("Googlebutton_name", null);
     }
 
     public static void SetGoogleInter(String GoogleInter) {
@@ -161,6 +199,9 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("GoogleNative2", null);
     }
 
+    /**
+     * Facebook
+     */
     public static void setFacebookEnable(String FacebookEnable) {
         editor.putString("FacebookEnable", FacebookEnable).commit();
     }
@@ -242,13 +283,177 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("FacebookNative2", null);
     }
 
-    public static void setQurega_link(String Qurega_link) {
-        editor.putString("Qurega_link", Qurega_link).commit();
+    /**
+     * AppLovin
+     */
+    public static void setAppLovinEnable(String AppLovinEnable) {
+        editor.putString("AppLovinEnable", AppLovinEnable).commit();
     }
 
-    public static String getQurega_link() {
-        return sharedPreferences.getString("Qurega_link", null);
+    public static String getAppLovinEnable() {
+        return sharedPreferences.getString("AppLovinEnable", null);
     }
+
+    public static void setAppLovinBanner(String AppLovinBanner) {
+        editor.putString("AppLovinBanner", AppLovinBanner).commit();
+    }
+
+    public static String getAppLovinBanner() {
+        return sharedPreferences.getString("AppLovinBanner", null);
+    }
+
+    public static void setAppLovinNative(String AppLovinNative) {
+        editor.putString("AppLovinNative", AppLovinNative).commit();
+    }
+
+    public static String getAppLovinNative() {
+        return sharedPreferences.getString("AppLovinNative", null);
+    }
+
+    public static void setAppLovinInter(String AppLovinInter) {
+        editor.putString("AppLovinInter", AppLovinInter).commit();
+    }
+
+    public static String getAppLovinInter() {
+        return sharedPreferences.getString("AppLovinInter", null);
+    }
+
+
+    /**
+     * Criteo
+     */
+    public static void setCriteoEnable(String CriteoEnable) {
+        editor.putString("CriteoEnable", CriteoEnable).commit();
+    }
+
+    public static String getCriteoEnable() {
+        return sharedPreferences.getString("CriteoEnable", null);
+    }
+
+    public static void setCriteoAppID(String CriteoAppID) {
+        editor.putString("CriteoAppID", CriteoAppID).commit();
+    }
+
+    public static String getCriteoAppID() {
+        return sharedPreferences.getString("CriteoAppID", null);
+    }
+
+    public static void setCriteoBanner(String CriteoBanner) {
+        editor.putString("CriteoBanner", CriteoBanner).commit();
+    }
+
+    public static String getCriteoBanner() {
+        return sharedPreferences.getString("CriteoBanner", null);
+    }
+
+    public static void setCriteoNative(String CriteoNative) {
+        editor.putString("CriteoNative", CriteoNative).commit();
+    }
+
+    public static String getCriteoNative() {
+        return sharedPreferences.getString("CriteoNative", null);
+    }
+
+    public static void setCriteoInter(String CriteoInter) {
+        editor.putString("CriteoInter", CriteoInter).commit();
+    }
+
+    public static String getCriteoInter() {
+        return sharedPreferences.getString("CriteoInter", null);
+    }
+
+
+    /**
+     * Unity
+     */
+    public static void setUnityEnable(String UnityEnable) {
+        editor.putString("UnityEnable", UnityEnable).commit();
+    }
+
+    public static String getUnityEnable() {
+        return sharedPreferences.getString("UnityEnable", null);
+    }
+
+    public static void setUnityAppID(String UnityAppID) {
+        editor.putString("UnityAppID", UnityAppID).commit();
+    }
+
+    public static String getUnityAppID() {
+        return sharedPreferences.getString("UnityAppID", null);
+    }
+
+    public static void setUnityBannerID(String UnityBannerID) {
+        editor.putString("UnityBannerID", UnityBannerID).commit();
+    }
+
+    public static String getUnityBannerID() {
+        return sharedPreferences.getString("UnityBannerID", null);
+    }
+
+    public static void setUnityInterID(String UnityInterID) {
+        editor.putString("UnityInterID", UnityInterID).commit();
+    }
+
+    public static String getUnityInterID() {
+        return sharedPreferences.getString("UnityInterID", null);
+    }
+
+    /**
+     * Custom ads
+     */
+    public static void setCustomEnable(String CustomEnable) {
+        editor.putString("CustomEnable", CustomEnable).commit();
+    }
+
+    public static String getCustomEnable() {
+        return sharedPreferences.getString("CustomEnable", null);
+    }
+
+
+    /**
+     * Qureka link
+     */
+    public static void setauto_link_on_off(String auto_link_on_off) {
+        editor.putString("auto_link_on_off", auto_link_on_off).commit();
+    }
+
+    public static String getauto_link_on_off() {
+        return sharedPreferences.getString("auto_link_on_off", null);
+    }
+
+    public static void setauto_link_array(String auto_link_array) {
+        editor.putString("auto_link_array", auto_link_array).commit();
+    }
+
+    public static String getauto_link_array() {
+        return sharedPreferences.getString("auto_link_array", null);
+    }
+
+
+    public static void setauto_link_timer(String auto_link_timer) {
+        editor.putString("auto_link_timer", auto_link_timer).commit();
+    }
+
+    public static String getauto_link_timer() {
+        return sharedPreferences.getString("auto_link_timer", null);
+    }
+
+    public static void set_q_link_btn_on_off(String _q_link_btn_on_off) {
+        editor.putString("_q_link_btn_on_off", _q_link_btn_on_off).commit();
+    }
+
+    public static String get_q_link_btn_on_off() {
+        return sharedPreferences.getString("_q_link_btn_on_off", null);
+    }
+
+    public static void set_q_link_array(String _q_link_array) {
+        editor.putString("_q_link_array", _q_link_array).commit();
+    }
+
+    public static String get_q_link_array() {
+        return sharedPreferences.getString("_q_link_array", null);
+    }
+
 
     /**
      * Skip ADS
@@ -286,68 +491,9 @@ public class MyHelpers extends Application {
         return sharedPreferences.getInt("BackCounter", 5000);
     }
 
-    public static void setAutoopenLink(String AutoopenLink) {
-        editor.putString("AutoopenLink", AutoopenLink).commit();
-    }
-
-    public static String getAutoopenLink() {
-        return sharedPreferences.getString("AutoopenLink", null);
-    }
-
-    public static void setAutoopenLink_numer(String AutoopenLink_numer) {
-        editor.putString("AutoopenLink_numer", AutoopenLink_numer).commit();
-    }
-
-    public static String getAutoopenLink_numer() {
-        return sharedPreferences.getString("AutoopenLink_numer", "3");
-    }
-
-    public static Integer rendum(int min, int max) {
-        return new Random().nextInt((max - min) + 1) + min;
-    }
-
-    public static void setGoogleEnable(String GoogleEnable) {
-        editor.putString("GoogleEnable", GoogleEnable).commit();
-    }
-
-    public static String getGoogleEnable() {
-        return sharedPreferences.getString("GoogleEnable", null);
-    }
-
-
-    public static void setGoogle_OpenADS(String Google_OpenADS) {
-        editor.putString("Google_OpenADS", Google_OpenADS).commit();
-    }
-
-    public static String getGoogle_OpenADS() {
-        return sharedPreferences.getString("Google_OpenADS", null);
-    }
-
-    public static void setad_ICON(String ad_ICON) {
-        editor.putString("ad_ICON", ad_ICON).commit();
-    }
-
-    public static String getad_ICON() {
-        return sharedPreferences.getString("ad_ICON", null);
-    }
-
-    public static void setGooglebutton_color(String Googlebutton_color) {
-        editor.putString("Googlebutton_color", Googlebutton_color).commit();
-    }
-
-    public static String getGooglebutton_color() {
-        return sharedPreferences.getString("Googlebutton_color", null);
-    }
-
-    public static void setGooglebutton_name(String Googlebutton_name) {
-        editor.putString("Googlebutton_name", Googlebutton_name).commit();
-    }
-
-    public static String getGooglebutton_name() {
-        return sharedPreferences.getString("Googlebutton_name", null);
-    }
-
-    //Skip Country
+    /**
+     * Skip Country
+     */
     public static void setSkip_country_on_off(String skip_country_on_off) {
         editor.putString("skip_country_on_off", skip_country_on_off).commit();
     }
@@ -364,45 +510,19 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("skip_country_list", null);
     }
 
-
-    /*extra btn*/
-    public static void setExtraBtn_1(String ExtraBtn_1) {
-        editor.putString("ExtraBtn_1", ExtraBtn_1).commit();
+    /**
+     * App Live Status
+     */
+    public static void setlive_status(String live_status) {
+        editor.putString("live_status", live_status).commit();
     }
 
-    public static String getExtraBtn_1() {
-        return sharedPreferences.getString("ExtraBtn_1", null);
-    }
-
-    public static void setauto_link_on_off(String auto_link_on_off) {
-        editor.putString("auto_link_on_off", auto_link_on_off).commit();
-    }
-
-    public static String getauto_link_on_off() {
-        return sharedPreferences.getString("auto_link_on_off", null);
-    }
-
-    public static void setauto_link_array(String auto_link_array) {
-        editor.putString("auto_link_array", auto_link_array).commit();
-    }
-
-    public static String getauto_link_array() {
-        return sharedPreferences.getString("auto_link_array", null);
-    }
-
-
-    public static void setauto_link_timer(String auto_link_timer) {
-        editor.putString("auto_link_timer", auto_link_timer).commit();
-    }
-
-    public static String getauto_link_timer() {
-        return sharedPreferences.getString("auto_link_timer", null);
+    public static String getlive_status() {
+        return sharedPreferences.getString("live_status", null);
     }
 
     /**
      * MIX ADS
-     *
-     * @param
      */
     public static void setmix_ad_on_off(String mix_ad_on_off) {
         editor.putString("mix_ad_on_off", mix_ad_on_off).commit();
@@ -412,6 +532,37 @@ public class MyHelpers extends Application {
         return sharedPreferences.getString("mix_ad_on_off", null);
     }
 
+    public static void setmix_ad_name(String mix_ad_name) {
+        editor.putString("mix_ad_name", mix_ad_name).commit();
+    }
+
+    public static String getmix_ad_name() {
+        return sharedPreferences.getString("mix_ad_name", null);
+    }
+
+    public static void setmix_ad_banner(String mix_ad_banner) {
+        editor.putString("mix_ad_banner", mix_ad_banner).commit();
+    }
+
+    public static String getmix_ad_banner() {
+        return sharedPreferences.getString("mix_ad_banner", null);
+    }
+
+    public static void setmix_ad_native(String mix_ad_native) {
+        editor.putString("mix_ad_native", mix_ad_native).commit();
+    }
+
+    public static String getmix_ad_native() {
+        return sharedPreferences.getString("mix_ad_native", null);
+    }
+
+    public static void setmix_ad_inter(String mix_ad_inter) {
+        editor.putString("mix_ad_inter", mix_ad_inter).commit();
+    }
+
+    public static String getmix_ad_inter() {
+        return sharedPreferences.getString("mix_ad_inter", null);
+    }
 
     public static void setmix_ad_counter(Integer mix_ad_counter) {
         editor.putInt("mix_ad_counter", mix_ad_counter).commit();
@@ -514,32 +665,6 @@ public class MyHelpers extends Application {
     }
 
 
-    public static void openChromeCustomTabUrl(Context context) {
-
-        try {
-
-            if (isAppInstalled("com.android.chrome", context)) {
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                builder.setToolbarColor(ResourcesCompat.getColor(context.getResources(), R.color.purple_700, null));
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.intent.setPackage("com.android.chrome");
-                customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                customTabsIntent.launchUrl(context, Uri.parse(MyHelpers.getQurega_link()));
-
-
-            } else {
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                builder.setToolbarColor(ResourcesCompat.getColor(context.getResources(), R.color.purple_700, null));
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                customTabsIntent.launchUrl(context, Uri.parse(MyHelpers.getQurega_link()));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-
-        }
-    }
-
     public static void LinkopenChromeCustomTabUrl(Context context, String Link) {
 
         try {
@@ -595,7 +720,6 @@ public class MyHelpers extends Application {
         }, Integer.parseInt(MyHelpers.getauto_link_timer()));
     }
 
-
     public static void LinkOpenChromeCustomTabUrl(Context context, String Link) {
         try {
             if (MyHelpers.isAppInstalled("com.android.chrome", context)) {
@@ -619,6 +743,13 @@ public class MyHelpers extends Application {
 
         }
     }
+
+    public static void BtnAutolink() {
+        String[] Auto_Link = MyHelpers.get_q_link_array().split(",");
+        LinkOpenChromeCustomTabUrl(instance, Auto_Link[getRandomNumber(0, Auto_Link.length - 1)]);
+    }
+
+
 }
 
 

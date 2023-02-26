@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.appwood.mylibrarys.MyHelpers;
 import com.appwood.mylibrarys.SplashHelp;
 import com.ravi.ad.allapps.MainActivity;
 import com.ravi.ad.allapps.R;
@@ -24,12 +26,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        FirebaseGetId();
+            FirebaseGetId();
     }
 
     private void FirebaseGetId() {
         if (isOnline()) {
-            SplashHelp.splash_next("Testing..New,Setup", "1", this, new Intent(this, MainActivity.class));
+            SplashHelp.splash_next("Test", "1", this, new Intent(this, MainActivity.class));
             return;
         }
         Dialog dialog = new Dialog(SplashActivity.this);

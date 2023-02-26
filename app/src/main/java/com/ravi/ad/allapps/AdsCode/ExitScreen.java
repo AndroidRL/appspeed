@@ -13,7 +13,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.appwood.mylibrarys.AdsClass;
+import com.appwood.mylibrarys.InterClass;
 import com.appwood.mylibrarys.SystemUiManager;
 import com.ravi.ad.allapps.R;
 
@@ -50,11 +50,11 @@ public class ExitScreen extends Activity {
     }
 
     private void yes() {
-         finishAffinity();
+        finishAffinity();
     }
 
     private void no() {
-        AdsClass.BackInterstitial(ExitScreen.this);
+        InterClass.BackInterstitial(ExitScreen.this);
     }
 
     @Override

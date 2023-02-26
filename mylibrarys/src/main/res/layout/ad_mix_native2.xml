@@ -6,41 +6,53 @@
 
 
     <RelativeLayout
-        android:id="@+id/ad_native_fb1"
+        android:id="@+id/addcontain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="gone" />
-
-
-    <RelativeLayout
-        android:id="@+id/addcontain1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
+            android:background="@color/white"
             android:visibility="visible">
 
             <LinearLayout
-                android:id="@+id/banner_native1"
+                android:id="@+id/banner_native"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
         </RelativeLayout>
 
         <FrameLayout
-            android:id="@+id/native_detail1"
+            android:id="@+id/native_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/ad_native_fb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone" />
 
 
+    <LinearLayout
+        android:id="@+id/custom_native"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical" />
+
+    <FrameLayout
+        android:id="@+id/native_ad_layout"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
